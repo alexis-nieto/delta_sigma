@@ -3,6 +3,13 @@ import os
 from time import sleep
 
 
+def clear_screen():
+    if os.name == "nt":
+        os.system("cls")
+    else:
+        os.system("clear")
+
+
 def menu():
 
     #'''
@@ -14,7 +21,7 @@ def menu():
 
     while True:
 
-        os.system("clear")
+        clear_screen()
         print_menu_main()
         print("")
         option = int(input("? "))
@@ -24,7 +31,7 @@ def menu():
             selection["category"] = "diferenciacion"
 
             while True:
-                os.system("clear")
+                clear_screen()
                 print_menu_1()
                 print("")
                 option = int(input("? "))
@@ -43,7 +50,7 @@ def menu():
             selection["category"] = "integracion"
 
             while True:
-                os.system("clear")
+                clear_screen()
                 print_menu_2()
                 print("")
                 option = int(input("? "))
@@ -130,6 +137,7 @@ def print_menu_1():
 def print_menu_2():
 
     print("\t== Integracion Numerica ==")
+    print("")
 
     print("• 1. Regla del Trapecio")
     print("• 2. Regla del Trapecio de Aplicacion Multiple")
