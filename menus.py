@@ -3,6 +3,13 @@ import os
 from time import sleep
 
 
+def clear_screen():
+    if os.name == "nt":
+        os.system("cls")
+    else:
+        os.system("clear")
+
+
 def menu():
 
     #'''
@@ -14,7 +21,7 @@ def menu():
 
     while True:
 
-        os.system("clear")
+        clear_screen()
         print_menu_main()
         print("")
         option = int(input("? "))
@@ -24,7 +31,7 @@ def menu():
             selection["category"] = "diferenciacion"
 
             while True:
-                os.system("clear")
+                clear_screen()
                 print_menu_1()
                 print("")
                 option = int(input("? "))
@@ -35,7 +42,7 @@ def menu():
                     selection["subcategory"] = option
                     return selection
                 else:
-                    print("\nOpcion no valida, intente de nuevo...\n")
+                    print("\nOpción no válida, intente de nuevo...\n")
                     sleep(1)
 
         elif option == 2:
@@ -43,7 +50,7 @@ def menu():
             selection["category"] = "integracion"
 
             while True:
-                os.system("clear")
+                clear_screen()
                 print_menu_2()
                 print("")
                 option = int(input("? "))
@@ -54,15 +61,15 @@ def menu():
                     selection["subcategory"] = option
                     return selection
                 else:
-                    print("\nOpcion no valida, intente de nuevo...\n")
+                    print("\nOpción no válida, intente de nuevo...\n")
                     sleep(1)
 
         elif option == 0:
-            print("\nAdios\n")
+            print("\nAdiós\n")
             sys.exit(0)
 
         else:
-            print("\nOpcion no valida, intente de nuevo...\n")
+            print("\nOpción no válida, intente de nuevo...\n")
             sleep(1)
 
 
@@ -71,15 +78,15 @@ def print_menu_main():
     print("\t== Menu ==")
     print("")
 
-    print("• 1. Diferenciacion Numerica")
-    print("• 2. Integracion Numerica")
+    print("• 1. Diferenciación Numérica")
+    print("• 2. Integración Numérica")
     
     print("• 0. Salir")
 
 
 def print_menu_1():
 
-    print("\t== Diferenciacion Numerica ==")
+    print("\t== Diferenciación Numérica ==")
     print("")
 
     print("• Fórmulas de diferencias finitas divididas hacia adelante:")
@@ -129,12 +136,13 @@ def print_menu_1():
 
 def print_menu_2():
 
-    print("\t== Integracion Numerica ==")
+    print("\t== Integración Numérica ==")
+    print("")
 
     print("• 1. Regla del Trapecio")
-    print("• 2. Regla del Trapecio de Aplicacion Multiple")
+    print("• 2. Regla del Trapecio de Aplicación Múltiple")
     print("• 3. Regla de Simpson 1/3")
-    print("• 4. Regla de Simpson 1/3 de Aplicacion Multiple")
+    print("• 4. Regla de Simpson 1/3 de Aplicación Múltiple")
     print("• 5. Regla de Simpson 3/8")
 
     print("• 0. Volver")
