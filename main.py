@@ -1,13 +1,11 @@
-from menus import menu
+from menus import *
 #from sympy import *
 #from tabulate import tabulate
 
 
 def main():
     
-    selection = menu()
-
-    print(selection)
+    menu_main()
 
 
 if __name__ == "__main__":

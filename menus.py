@@ -2,6 +2,18 @@ import sys
 import os
 from time import sleep
 
+# Global variables
+
+# Selection dictionary
+selection = {
+    "category": str,
+    "subcategory": int,
+}
+
+
+def indent(n_spaces: int) -> str:
+    return " " * n_spaces
+
 
 def clear_screen():
     if os.name == "nt":
@@ -10,72 +22,84 @@ def clear_screen():
         os.system("clear")
 
 
-def menu():
-
-    #'''
-    selection = {
-        "category": str,
-        "subcategory": int,
-    }
-    #'''
+def menu_main():
 
     while True:
 
         clear_screen()
         print_menu_main()
         print("")
+
         option = int(input("? "))
 
-        if option == 1:
+        if option == 0:
+            print("\nAdiós...\n")
+            sleep(1)
+            sys.exit(0)
 
-            selection["category"] = "diferenciacion"
+        elif option == 1:
 
-            while True:
-                clear_screen()
-                print_menu_1()
-                print("")
-                option = int(input("? "))
-
-                if option == 0:
-                    break
-                elif option >= 1 and option <= 24:
-                    selection["subcategory"] = option
-                    return selection
-                else:
-                    print("\nOpción no válida, intente de nuevo...\n")
-                    sleep(1)
+            menu_differenciation()
 
         elif option == 2:
 
-            selection["category"] = "integracion"
-
-            while True:
-                clear_screen()
-                print_menu_2()
-                print("")
-                option = int(input("? "))
-
-                if option == 0:
-                    break
-                elif option >= 1 and option <= 5:
-                    selection["subcategory"] = option
-                    return selection
-                else:
-                    print("\nOpción no válida, intente de nuevo...\n")
-                    sleep(1)
-
-        elif option == 0:
-            print("\nAdiós\n")
-            sys.exit(0)
+           menu_integration()
 
         else:
             print("\nOpción no válida, intente de nuevo...\n")
             sleep(1)
 
 
+def menu_differenciation():
+
+    selection["category"] = "differenciation"
+
+    while True:
+        clear_screen()
+        print_menu_differenciation()
+        print("")
+        option = int(input("? "))
+
+        if option == 0:
+            break
+
+        elif option >= 1 and option <= 24:
+            selection["subcategory"] = option
+            print(selection)
+            sleep(1)
+            break
+            
+        else:
+            print("\nOpción no válida, intente de nuevo...\n")
+            sleep(1)
+
+
+def menu_integration():
+
+    selection["category"] = "integration"
+
+    while True:
+        clear_screen()
+        print_menu_integration()
+        print("")
+        option = int(input("? "))
+
+        if option == 0:
+            break
+
+        elif option >= 1 and option <= 5:
+            selection["subcategory"] = option
+            print(selection)
+            sleep(1)
+            break
+
+        else:
+            print("\nOpción no válida, intente de nuevo...\n")
+            sleep(1)
+
 
 def print_menu_main():
-    print("\t== Menu ==")
+    print(f"{indent(2)}== Menu ==")
     print("")
 
     print("• 1. Diferenciación Numérica")
@@ -84,59 +108,59 @@ def print_menu_main():
     print("• 0. Salir")
 
 
-def print_menu_1():
+def print_menu_differenciation():
 
-    print("\t== Diferenciación Numérica ==")
+    print(f"{indent(2)}== Diferenciación Numérica ==")
     print("")
 
     print("• Fórmulas de diferencias finitas divididas hacia adelante:")
-    print("\t• Primera Derivada:")
-    print("\t\t• 1.  Error O(h)")
-    print("\t\t• 2.  Error O(h²)")
-    print("\t• Segunda Derivada:")
-    print("\t\t• 3.  Error O(h)")
-    print("\t\t• 4.  Error O(h²)")
-    print("\t• Tercera Derivada:")
-    print("\t\t• 5.  Error O(h)")
-    print("\t\t• 6.  Error O(h²)")
-    print("\t• Cuarta Derivada:")
-    print("\t\t• 7.  Error O(h)")
-    print("\t\t• 8.  Error O(h²)")
+    print(f"{indent(2)}• Primera Derivada:")
+    print(f"{indent(4)}• 1.  Error O(h)")
+    print(f"{indent(4)}• 2.  Error O(h²)")
+    print(f"{indent(2)}• Segunda Derivada:")
+    print(f"{indent(4)}• 3.  Error O(h)")
+    print(f"{indent(4)}• 4.  Error O(h²)")
+    print(f"{indent(2)}• Tercera Derivada:")
+    print(f"{indent(4)}• 5.  Error O(h)")
+    print(f"{indent(4)}• 6.  Error O(h²)")
+    print(f"{indent(2)}• Cuarta Derivada:")
+    print(f"{indent(4)}• 7.  Error O(h)")
+    print(f"{indent(4)}• 8.  Error O(h²)")
 
     print("• Fórmulas de diferencias finitas divididas hacia atrás:")
-    print("\t• Primera Derivada:")
-    print("\t\t• 9.  Error O(h)")
-    print("\t\t• 10. Error O(h²)")
-    print("\t• Segunda Derivada:")
-    print("\t\t• 11. Error O(h)")
-    print("\t\t• 12. Error O(h²)")
-    print("\t• Tercera Derivada:")
-    print("\t\t• 13. Error O(h)")
-    print("\t\t• 14. Error O(h²)")
-    print("\t• Cuarta Derivada:")
-    print("\t\t• 15. Error O(h)")
-    print("\t\t• 16. Error O(h²)")
+    print(f"{indent(2)}• Primera Derivada:")
+    print(f"{indent(4)}• 9.  Error O(h)")
+    print(f"{indent(4)}• 10. Error O(h²)")
+    print(f"{indent(2)}• Segunda Derivada:")
+    print(f"{indent(4)}• 11. Error O(h)")
+    print(f"{indent(4)}• 12. Error O(h²)")
+    print(f"{indent(2)}• Tercera Derivada:")
+    print(f"{indent(4)}• 13. Error O(h)")
+    print(f"{indent(4)}• 14. Error O(h²)")
+    print(f"{indent(2)}• Cuarta Derivada:")
+    print(f"{indent(4)}• 15. Error O(h)")
+    print(f"{indent(4)}• 16. Error O(h²)")
 
     print("• Fórmulas de diferencias finitas divididas centradas:")
-    print("\t• Primera Derivada:")
-    print("\t\t• 17. Error O(h²)")
-    print("\t\t• 18. Error O(h⁴)")
-    print("\t• Segunda Derivada:")
-    print("\t\t• 19. Error O(h²)")
-    print("\t\t• 20. Error O(h⁴)")
-    print("\t• Tercera Derivada:")
-    print("\t\t• 21. Error O(h²)")
-    print("\t\t• 22. Error O(h⁴)")
-    print("\t• Cuarta Derivada:")
-    print("\t\t• 23. Error O(h²)")
-    print("\t\t• 24. Error O(h⁴)")
+    print(f"{indent(2)}• Primera Derivada:")
+    print(f"{indent(4)}• 17. Error O(h²)")
+    print(f"{indent(4)}• 18. Error O(h⁴)")
+    print(f"{indent(2)}• Segunda Derivada:")
+    print(f"{indent(4)}• 19. Error O(h²)")
+    print(f"{indent(4)}• 20. Error O(h⁴)")
+    print(f"{indent(2)}• Tercera Derivada:")
+    print(f"{indent(4)}• 21. Error O(h²)")
+    print(f"{indent(4)}• 22. Error O(h⁴)")
+    print(f"{indent(2)}• Cuarta Derivada:")
+    print(f"{indent(4)}• 23. Error O(h²)")
+    print(f"{indent(4)}• 24. Error O(h⁴)")
 
     print("• 0. Volver")
 
 
-def print_menu_2():
+def print_menu_integration():
 
-    print("\t== Integración Numérica ==")
+    print(f"{indent(2)}== Integración Numérica ==")
     print("")
 
     print("• 1. Regla del Trapecio")
