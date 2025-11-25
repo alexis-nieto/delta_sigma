@@ -302,7 +302,20 @@ def solver_integration_estimated_value(option: int, f: str, a: float, b: float, 
             n += 1
 
     elif option == 4:
-        pass
+
+        # Simpson 1/3
+
+        n = 2
+
+        h = (b - a)/n
+
+        x_list = []
+
+        for i in range(1, n):
+           #print(f"x{i}: {a+h*i}")
+           x_list.append(round(a+h*i, sig_fig))
+
+        formula_result = round((b - a)*(f_(a) + 4*sum(f_(i) for i in x_list) + f_(b))/(6), sig_fig)
 
     elif option == 5:
         pass
