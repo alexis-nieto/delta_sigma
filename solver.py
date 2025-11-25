@@ -309,22 +309,42 @@ def solver_integration_estimated_value(option: int, f: str, a: float, b: float, 
 
         h = (b - a)/n
 
-        x_list = []
-
-        for i in range(1, n):
-           #print(f"x{i}: {a+h*i}")
-           x_list.append(round(a+h*i, sig_fig))
-
-        formula_result = round((b - a)*(f_(a) + 4*sum(f_(i) for i in x_list) + f_(b))/(6), sig_fig)
+        formula_result = round((b - a)*(f_(a) + 4*(f_(a+h)) + f_(b))/(6), sig_fig)
 
     elif option == 5:
-        pass
+        
+        # Simpson 1/3 (Multiple Application)
+
+        n = int(input("\nNúmero de intervalos inicial? "))
+
+        h = (b - a)/n
+
+        x_list_pair = []
+        x_list_odd = []
+
+        for i in range(1, n):
+            if i % 2 == 0:
+                x_list_pair.append(round(a+h*i, sig_fig))
+            else:
+                x_list_odd.append(round(a+h*i, sig_fig))
+
+        print(x_list_pair)
+        print(x_list_odd)
+
+        formula_result = round((b - a)*(f_(a) + 4*sum(f_(i) for i in x_list_odd) + 2*sum(f_(i) for i in x_list_pair) + f_(b))/(3*n), sig_fig)
 
     elif option == 6:
         pass
 
     elif option == 7:
-        pass
+        
+        # Simpson 3/8
+
+        n = 3
+
+        h = (b - a)/n
+
+        formula_result = round((b - a)*(f_(a) + 3*(f_(a+h)) + 3*(f_(a+h*2)) + f_(b))/(8), sig_fig)
 
     return round(formula_result, sig_fig)
 
