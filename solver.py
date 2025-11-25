@@ -1,7 +1,7 @@
 import sympy as sp
 import sys
 
-significance = 8
+sig_fig = 8
 
 ############################################
 
@@ -28,20 +28,20 @@ def solver_differenciation_real_value(function: str, x: float):
     f_derivative = sp.diff(f, sy_x)
     evaluation = f_derivative.subs(sy_x, x)
 
-    return round(evaluation, significance)
+    return round(evaluation, sig_fig)
 
 
 def solver_differenciation_error(real_value: float, estimated_value: float):
 
     error = abs((real_value - estimated_value)*(100)/real_value)
 
-    return round(error, significance)
+    return round(error, sig_fig)
 
 
 def solver_differenciation_estimated_value(option: int, f: str, x: float, h: float):
 
     def f_xi_h(times: int):
-        return round(f.subs(sy_x, x+h*times), significance)
+        return round(f.subs(sy_x, x+h*times), sig_fig)
 
     sy_x = sp.symbols('x')
     f = sp.sympify(f)
@@ -191,7 +191,7 @@ def solver_differenciation_estimated_value(option: int, f: str, x: float, h: flo
         print("\nError desconocido\n")
         sys.exit(2)
 
-    return round(formula_result, significance)
+    return round(formula_result, sig_fig)
 
 ############################################
 
@@ -202,12 +202,12 @@ def solver_integration(option: int):
     b = float(input("\nb? "))
 
     real_value = solver_integration_real_value(f, a, b)
-    estimated_value = solver_integration_estimated_value(option, f, a, b)
+    estimated_value = solver_integration_estimated_value(option, f, a, b, real_value)
     error = solver_integration_error(real_value, estimated_value)
 
-    print("\nValor real:", real_value)
+    print("Valor real:", real_value)
     print("Valor estimado:", estimated_value)
-    print("Error:", round(error, 2),"%")
+    print("Error:", round(error, sig_fig),"%")
 
 
 def solver_integration_real_value(function: str, a: float, b: float):
@@ -217,20 +217,20 @@ def solver_integration_real_value(function: str, a: float, b: float):
 
     definite_integral = sp.integrate(f, (sy_x, a, b))
 
-    return round(definite_integral, significance)
+    return round(definite_integral, sig_fig)
 
 
 def solver_integration_error(real_value: float, estimated_value: float):
 
     error = abs((real_value - estimated_value)*(100)/real_value)
 
-    return round(error, significance)
+    return round(error, sig_fig)
 
 
-def solver_integration_estimated_value(option: int, f: str, a: float, b: float):
+def solver_integration_estimated_value(option: int, f: str, a: float, b: float, real_value: float):
 
     def f_(limit: int):
-        return round(f.subs(sy_x, limit), significance)
+        return round(f.subs(sy_x, limit), sig_fig)
 
     sy_x = sp.symbols('x')
     f = sp.sympify(f)
@@ -238,7 +238,6 @@ def solver_integration_estimated_value(option: int, f: str, a: float, b: float):
     if option == 1:
 
         # Trapezoidal Rule
-
         formula_result = (b - a)*(f_(a) + f_(b))/2
 
     elif option == 2:
@@ -253,14 +252,46 @@ def solver_integration_estimated_value(option: int, f: str, a: float, b: float):
 
         for i in range(1, n):
            #print(f"x{i}: {a+h*i}")
-           x_list.append(a+h*i)
+           x_list.append(round(a+h*i, sig_fig))
 
-        print(x_list)
+        #print(x_list)
 
-        formula_result = (b - a)*(f_(a) + 2*sum(f_(i) for i in x_list) + f_(b))/(2*n)
+        formula_result = round((b - a)*(f_(a) + 2*sum(f_(i) for i in x_list) + f_(b))/(2*n), sig_fig)
 
     elif option == 3:
-        pass
+        
+        # Trapezoidal Rule (Multiple Application AND Iterative)
+
+        error = float(input("\nError? (Formato: 0.01 = 0.01%) "))
+
+        n = int(input("\nNúmero de intervalos inicial? "))
+
+        formula_result_list = []
+
+        while True:
+
+            h = (b - a)/n
+
+            x_list = []
+
+            for i in range(1, n):
+                x_list.append(round(a+h*i, sig_fig))
+
+            #print(x_list)
+
+            formula_result_list.append((b - a)*(f_(a) + 2*sum(f_(i) for i in x_list) + f_(b))/(2*n))
+
+            if solver_integration_error(real_value, formula_result_list[-1]) <= error:
+
+                #todo: print_table(formula_result_list)
+
+                print("\nIteraciones: ", len(formula_result_list))
+
+                return round(formula_result_list[-1], sig_fig)
+
+                break
+
+            n += 1
 
     elif option == 4:
         pass
@@ -268,5 +299,11 @@ def solver_integration_estimated_value(option: int, f: str, a: float, b: float):
     elif option == 5:
         pass
 
-    return round(formula_result, significance)
+    elif option == 6:
+        pass
+
+    elif option == 7:
+        pass
+
+    return round(formula_result, sig_fig)
 

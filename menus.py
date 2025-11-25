@@ -77,7 +77,7 @@ def menu_integration():
         if option == 0:
             break
 
-        elif option >= 1 and option <= 5:
+        elif option >= 1 and option <= 7:
             solver_integration(option)
             print("\nPresiona Enter para ir al menu anterior...")
             input()
@@ -154,8 +154,10 @@ def print_menu_integration():
 
     print("• 1. Regla del Trapecio")
     print("• 2. Regla del Trapecio de Aplicación Múltiple")
-    print("• 3. Regla de Simpson 1/3")
-    print("• 4. Regla de Simpson 1/3 de Aplicación Múltiple")
-    print("• 5. Regla de Simpson 3/8")
+    print("• 3. Regla del Trapecio de Aplicación Múltiple Iterativa")
+    print("• 4. Regla de Simpson 1/3")
+    print("• 5. Regla de Simpson 1/3 de Aplicación Múltiple")
+    print("• 6. Regla de Simpson 1/3 de Aplicación Múltiple Iterativa")
+    print("• 7. Regla de Simpson 3/8")
 
     print("• 0. Volver")
