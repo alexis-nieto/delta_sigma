@@ -1,14 +1,7 @@
 import sys
 import os
 from time import sleep
-
-# Global variables
-
-# Selection dictionary
-selection = {
-    "category": str,
-    "subcategory": int,
-}
+from solver import solver_differentiation
 
 
 def indent(n_spaces: int) -> str:
@@ -52,8 +45,6 @@ def menu_main():
 
 def menu_differenciation():
 
-    selection["category"] = "differenciation"
-
     while True:
         clear_screen()
         print_menu_differenciation()
@@ -64,10 +55,8 @@ def menu_differenciation():
             break
 
         elif option >= 1 and option <= 24:
-            selection["subcategory"] = option
-            print(selection)
-            sleep(1)
-            break
+            solver_differentiation(option)
+            sleep(999)
             
         else:
             print("\nOpción no válida, intente de nuevo...\n")
@@ -75,8 +64,6 @@ def menu_differenciation():
 
 
 def menu_integration():
-
-    selection["category"] = "integration"
 
     while True:
         clear_screen()
@@ -88,10 +75,8 @@ def menu_integration():
             break
 
         elif option >= 1 and option <= 5:
-            selection["subcategory"] = option
-            print(selection)
-            sleep(1)
-            break
+            solver_integration(option)
+            sleep(999)
 
         else:
             print("\nOpción no válida, intente de nuevo...\n")
