@@ -56,7 +56,8 @@ def menu_differenciation():
 
         elif option >= 1 and option <= 24:
             solver_differentiation(option)
-            sleep(999)
+            print("\nPresiona Enter para ir al menu anterior...")
+            input()
             
         else:
             print("\nOpción no válida, intente de nuevo...\n")
@@ -76,7 +77,8 @@ def menu_integration():
 
         elif option >= 1 and option <= 5:
             solver_integration(option)
-            sleep(999)
+            print("\nPresiona Enter para ir al menu anterior...")
+            input()
 
         else:
             print("\nOpción no válida, intente de nuevo...\n")
