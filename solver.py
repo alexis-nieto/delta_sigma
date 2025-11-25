@@ -266,24 +266,32 @@ def solver_integration_estimated_value(option: int, f: str, a: float, b: float, 
 
         n = int(input("\nNúmero de intervalos inicial? "))
 
+        original_n = n
+
         formula_result_list = []
+        error_list = []
+        h_list = []
 
         while True:
 
             h = (b - a)/n
+            h_list.append(round(h, sig_fig))
 
             x_list = []
 
             for i in range(1, n):
                 x_list.append(round(a+h*i, sig_fig))
 
-            #print(x_list)
+            formula_result = (b - a)*(f_(a) + 2*sum(f_(i) for i in x_list) + f_(b))/(2*n)
+            current_error = solver_integration_error(real_value, formula_result)
 
-            formula_result_list.append((b - a)*(f_(a) + 2*sum(f_(i) for i in x_list) + f_(b))/(2*n))
+            formula_result_list.append(round(formula_result, sig_fig))
+            error_list.append(round(current_error, sig_fig))
 
-            if solver_integration_error(real_value, formula_result_list[-1]) <= error:
+            if current_error <= error:
 
-                #todo: print_table(formula_result_list)
+                print()
+                print_table(original_n, h_list, formula_result_list, error_list, sig_fig)
 
                 print("\nIteraciones: ", len(formula_result_list))
 
@@ -307,3 +315,19 @@ def solver_integration_estimated_value(option: int, f: str, a: float, b: float, 
 
     return round(formula_result, sig_fig)
 
+def print_table(n: int, h_list: list, formula_result_list: list, error_list: list, sig_fig: int):
+
+    from tabulate import tabulate
+    
+    data = [[
+        i+1, # Iteration
+        n+i, # n
+        h_list[i], # h
+        formula_result_list[i], # I
+        error_list[i], # e
+    ] for i in range(len(formula_result_list))]
+    
+    headers = ['i', 'n', 'h', 'I', 'e']
+    
+    # Different table styles: 'grid', 'fancy_grid', 'pipe', 'orgtbl', 'github', 'pretty'
+    print(tabulate(data, headers=headers, tablefmt='pipe', floatfmt='{}.{}f'.format('', sig_fig)))
