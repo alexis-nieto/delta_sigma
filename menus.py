@@ -1,14 +1,7 @@
 import sys
 import os
 from time import sleep
-
-# Global variables
-
-# Selection dictionary
-selection = {
-    "category": str,
-    "subcategory": int,
-}
+from solver import solver_differentiation, solver_integration
 
 
 def indent(n_spaces: int) -> str:
@@ -52,22 +45,20 @@ def menu_main():
 
 def menu_differenciation():
 
-    selection["category"] = "differenciation"
-
     while True:
         clear_screen()
         print_menu_differenciation()
         print("")
         option = int(input("? "))
+        clear_screen()
 
         if option == 0:
             break
 
         elif option >= 1 and option <= 24:
-            selection["subcategory"] = option
-            print(selection)
-            sleep(1)
-            break
+            solver_differentiation(option)
+            print("\nPresiona Enter para ir al menu anterior...")
+            input()
             
         else:
             print("\nOpción no válida, intente de nuevo...\n")
@@ -76,22 +67,20 @@ def menu_differenciation():
 
 def menu_integration():
 
-    selection["category"] = "integration"
-
     while True:
         clear_screen()
         print_menu_integration()
         print("")
         option = int(input("? "))
+        clear_screen()
 
         if option == 0:
             break
 
-        elif option >= 1 and option <= 5:
-            selection["subcategory"] = option
-            print(selection)
-            sleep(1)
-            break
+        elif option >= 1 and option <= 7:
+            solver_integration(option)
+            print("\nPresiona Enter para ir al menu anterior...")
+            input()
 
         else:
             print("\nOpción no válida, intente de nuevo...\n")
@@ -165,8 +154,10 @@ def print_menu_integration():
 
     print("• 1. Regla del Trapecio")
     print("• 2. Regla del Trapecio de Aplicación Múltiple")
-    print("• 3. Regla de Simpson 1/3")
-    print("• 4. Regla de Simpson 1/3 de Aplicación Múltiple")
-    print("• 5. Regla de Simpson 3/8")
+    print("• 3. Regla del Trapecio de Aplicación Múltiple Iterativa")
+    print("• 4. Regla de Simpson 1/3")
+    print("• 5. Regla de Simpson 1/3 de Aplicación Múltiple")
+    print("• 6. Regla de Simpson 1/3 de Aplicación Múltiple Iterativa")
+    print("• 7. Regla de Simpson 3/8")
 
     print("• 0. Volver")
