@@ -3,6 +3,8 @@ import sys
 
 significance = 8
 
+############################################
+
 def solver_differentiation(option: int):
 
     f = input("\nFunción? ")
@@ -24,7 +26,6 @@ def solver_differenciation_real_value(function: str, x: float):
     f = sp.sympify(function)
 
     f_derivative = sp.diff(f, sy_x)
-    print(f_derivative)
     evaluation = f_derivative.subs(sy_x, x)
 
     return round(evaluation, significance)
@@ -192,11 +193,75 @@ def solver_differenciation_calculated_value(option: int, f: str, x: float, h: fl
 
     return round(formula_result, significance)
 
-
 ############################################
 
 def solver_integration(option: int):
-    pass
 
+    f = input("\nFunción? ")
+    x = float(input("\nx? "))
+    h = float(input("\nh? "))
+
+    real_value = solver_integration_real_value(f, x)
+    calculated_value = solver_integration_calculated_value(option, f, x, h)
+    error = solver_integration_error(real_value, calculated_value)
+
+    print("\nValor real: ", real_value)
+    print("Valor calculado: ", calculated_value)
+    print("Error: ", round(error, 2),"%")
+
+
+def solver_integration_real_value(function: str, x: float):
+
+    sy_x = sp.symbols('x')
+    f = sp.sympify(function)
+
+    f_derivative = sp.diff(f, sy_x)
+    evaluation = f_derivative.subs(sy_x, x)
+
+    return round(evaluation, significance)
+
+
+def solver_integration_error(real_value: float, calculated_value: float):
+
+    error = abs((real_value - calculated_value)*(100)/real_value)
+
+    return round(error, significance)
+
+
+def solver_integration_calculated_value(option: int, f: str, x: float, h: float):
+
+    def f_xi_h(times: int):
+        return round(f.subs(sy_x, x+h*times), significance)
+
+    sy_x = sp.symbols('x')
+    f = sp.sympify(f)
+
+    f_xi = f.subs(sy_x, x)
+
+    if option == 1:
+
+        # Forward, First Derivative, O(h)
+        
+        formula_result = (f_xi_h(+1) - f_xi)/h
+
+    elif option == 2:
+
+        # Forward, First Derivative, O(h²)
+        formula_result = (-f_xi_h(+2) + 4*f_xi_h(+1) - 3*f_xi)/(2*h)
+
+    elif option == 3:
+        
+        # Forward, Second Derivative, O(h)
+        formula_result = (f_xi_h(+2) - 2*f_xi_h(+1) + f_xi)/(h**2)
+
+    elif option == 4:
+        
+        # Forward, Second Derivative, O(h²)
+        formula_result = (-f_xi_h(+3) + 4*f_xi_h(+2) - 5*f_xi_h(+1) + 2*f_xi)/(h**2)
+
+    elif option == 5:
+        
+        # Forward, Third Derivative, O(h)
+        formula_result = (f_xi_h(+3) - 3*f_xi_h(+2) + 3*f_xi_h(+1) - f_xi)/(h**3)
 
 

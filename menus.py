@@ -1,7 +1,7 @@
 import sys
 import os
 from time import sleep
-from solver import solver_differentiation
+from solver import solver_differentiation, solver_integration
 
 
 def indent(n_spaces: int) -> str:
