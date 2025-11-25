@@ -334,7 +334,51 @@ def solver_integration_estimated_value(option: int, f: str, a: float, b: float, 
         formula_result = round((b - a)*(f_(a) + 4*sum(f_(i) for i in x_list_odd) + 2*sum(f_(i) for i in x_list_pair) + f_(b))/(3*n), sig_fig)
 
     elif option == 6:
-        pass
+        
+        # Simpson 1/3 (Multiple Application AND Iterative)
+
+        error = float(input("\nError? (Formato: 0.01 = 0.01%) "))
+
+        n = int(input("\nNúmero de intervalos inicial? "))
+
+        original_n = n
+
+        formula_result_list = []
+        error_list = []
+        h_list = []
+
+        while True:
+
+            h = (b - a)/n
+            h_list.append(round(h, sig_fig))
+
+            x_list_pair = []
+            x_list_odd = []
+
+            for i in range(1, n):
+                if i % 2 == 0:
+                    x_list_pair.append(round(a+h*i, sig_fig))
+                else:
+                    x_list_odd.append(round(a+h*i, sig_fig))
+
+            formula_result = round((b - a)*(f_(a) + 4*sum(f_(i) for i in x_list_odd) + 2*sum(f_(i) for i in x_list_pair) + f_(b))/(3*n), sig_fig)
+            current_error = solver_integration_error(real_value, formula_result)
+
+            formula_result_list.append(round(formula_result, sig_fig))
+            error_list.append(round(current_error, sig_fig))
+
+            if current_error <= error:
+
+                print()
+                print_table(original_n, h_list, formula_result_list, error_list, sig_fig)
+
+                print("\nIteraciones: ", len(formula_result_list))
+
+                return round(formula_result_list[-1], sig_fig)
+
+                break
+
+            n += 1
 
     elif option == 7:
         
