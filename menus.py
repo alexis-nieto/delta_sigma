@@ -50,6 +50,7 @@ def menu_differenciation():
         print_menu_differenciation()
         print("")
         option = int(input("? "))
+        clear_screen()
 
         if option == 0:
             break
@@ -71,6 +72,7 @@ def menu_integration():
         print_menu_integration()
         print("")
         option = int(input("? "))
+        clear_screen()
 
         if option == 0:
             break

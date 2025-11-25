@@ -12,12 +12,12 @@ def solver_differentiation(option: int):
     h = float(input("\nh? "))
 
     real_value = solver_differenciation_real_value(f, x)
-    calculated_value = solver_differenciation_calculated_value(option, f, x, h)
-    error = solver_differenciation_error(real_value, calculated_value)
+    estimated_value = solver_differenciation_estimated_value(option, f, x, h)
+    error = solver_differenciation_error(real_value, estimated_value)
 
-    print("\nValor real: ", real_value)
-    print("Valor calculado: ", calculated_value)
-    print("Error: ", round(error, 2),"%")
+    print("\nValor real:", real_value)
+    print("Valor estimado:", estimated_value)
+    print("Error:", round(error, 2),"%")
 
 
 def solver_differenciation_real_value(function: str, x: float):
@@ -31,14 +31,14 @@ def solver_differenciation_real_value(function: str, x: float):
     return round(evaluation, significance)
 
 
-def solver_differenciation_error(real_value: float, calculated_value: float):
+def solver_differenciation_error(real_value: float, estimated_value: float):
 
-    error = abs((real_value - calculated_value)*(100)/real_value)
+    error = abs((real_value - estimated_value)*(100)/real_value)
 
     return round(error, significance)
 
 
-def solver_differenciation_calculated_value(option: int, f: str, x: float, h: float):
+def solver_differenciation_estimated_value(option: int, f: str, x: float, h: float):
 
     def f_xi_h(times: int):
         return round(f.subs(sy_x, x+h*times), significance)
@@ -198,70 +198,75 @@ def solver_differenciation_calculated_value(option: int, f: str, x: float, h: fl
 def solver_integration(option: int):
 
     f = input("\nFunción? ")
-    x = float(input("\nx? "))
-    h = float(input("\nh? "))
+    a = float(input("\na? "))
+    b = float(input("\nb? "))
 
-    real_value = solver_integration_real_value(f, x)
-    calculated_value = solver_integration_calculated_value(option, f, x, h)
-    error = solver_integration_error(real_value, calculated_value)
+    real_value = solver_integration_real_value(f, a, b)
+    estimated_value = solver_integration_estimated_value(option, f, a, b)
+    error = solver_integration_error(real_value, estimated_value)
 
-    print("\nValor real: ", real_value)
-    print("Valor calculado: ", calculated_value)
-    print("Error: ", round(error, 2),"%")
+    print("\nValor real:", real_value)
+    print("Valor estimado:", estimated_value)
+    print("Error:", round(error, 2),"%")
 
 
-def solver_integration_real_value(function: str, x: float):
+def solver_integration_real_value(function: str, a: float, b: float):
 
     sy_x = sp.symbols('x')
     f = sp.sympify(function)
 
-    f_derivative = sp.diff(f, sy_x)
-    evaluation = f_derivative.subs(sy_x, x)
+    definite_integral = sp.integrate(f, (sy_x, a, b))
 
-    return round(evaluation, significance)
+    return round(definite_integral, significance)
 
 
-def solver_integration_error(real_value: float, calculated_value: float):
+def solver_integration_error(real_value: float, estimated_value: float):
 
-    error = abs((real_value - calculated_value)*(100)/real_value)
+    error = abs((real_value - estimated_value)*(100)/real_value)
 
     return round(error, significance)
 
 
-def solver_integration_calculated_value(option: int, f: str, x: float, h: float):
+def solver_integration_estimated_value(option: int, f: str, a: float, b: float):
 
-    def f_xi_h(times: int):
-        return round(f.subs(sy_x, x+h*times), significance)
+    def f_(limit: int):
+        return round(f.subs(sy_x, limit), significance)
 
     sy_x = sp.symbols('x')
     f = sp.sympify(f)
 
-    f_xi = f.subs(sy_x, x)
-
     if option == 1:
 
-        # Forward, First Derivative, O(h)
-        
-        formula_result = (f_xi_h(+1) - f_xi)/h
+        # Trapezoidal Rule
+
+        formula_result = (b - a)*(f_(a) + f_(b))/2
 
     elif option == 2:
 
-        # Forward, First Derivative, O(h²)
-        formula_result = (-f_xi_h(+2) + 4*f_xi_h(+1) - 3*f_xi)/(2*h)
+        # Trapezoidal Rule (Multiple Application)
+
+        n = int(input("\nNúmero de intervalos inicial? "))
+
+        h = (b - a)/n
+
+        x_list = []
+
+        for i in range(1, n):
+           #print(f"x{i}: {a+h*i}")
+           x_list.append(a+h*i)
+
+        print(x_list)
+
+        formula_result = (b - a)*(f_(a) + 2*sum(f_(i) for i in x_list) + f_(b))/(2*n)
 
     elif option == 3:
-        
-        # Forward, Second Derivative, O(h)
-        formula_result = (f_xi_h(+2) - 2*f_xi_h(+1) + f_xi)/(h**2)
+        pass
 
     elif option == 4:
-        
-        # Forward, Second Derivative, O(h²)
-        formula_result = (-f_xi_h(+3) + 4*f_xi_h(+2) - 5*f_xi_h(+1) + 2*f_xi)/(h**2)
+        pass
 
     elif option == 5:
-        
-        # Forward, Third Derivative, O(h)
-        formula_result = (f_xi_h(+3) - 3*f_xi_h(+2) + 3*f_xi_h(+1) - f_xi)/(h**3)
+        pass
 
+    return round(formula_result, significance)
 
