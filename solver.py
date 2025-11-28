@@ -189,7 +189,7 @@ def solver_differenciation_estimated_value(option: int, f: str, x: float, h: flo
         
         # Centered, Fourth Derivative, O(h⁴)
         
-        formula_result = (-f_xi_h(+3) + 12*f_xi_h(+2) - 39*f_xi_h(+1) + 56*f_xi - 39*f_xi_h(-1) + 12*f_xi_h(-2) - f_xi_h(-3))/(12*h**4)
+        formula_result = (-f_xi_h(+3) + 12*f_xi_h(+2) - 39*f_xi_h(+1) + 56*f_xi - 39*f_xi_h(-1) + 12*f_xi_h(-2) - f_xi_h(-3))/(6*h**4)
 
     else:
         print("\nError desconocido\n")
