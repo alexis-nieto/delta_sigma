@@ -1,5 +1,6 @@
 import sympy as sp
 import sys
+from utils import get_float, get_int
 
 sig_fig = 8
 
@@ -7,17 +8,20 @@ sig_fig = 8
 
 def solver_differentiation(option: int):
 
-    f = input("\nFunción? ")
-    x = float(input("\nx? "))
-    h = float(input("\nh? "))
+    try:
+        f = input("\nFunción? ")
+        x = get_float("\nx? ")
+        h = get_float("\nh? ")
 
-    real_value = solver_differenciation_real_value(f, x)
-    estimated_value = solver_differenciation_estimated_value(option, f, x, h)
-    error = solver_differenciation_error(real_value, estimated_value)
+        real_value = solver_differenciation_real_value(f, x)
+        estimated_value = solver_differenciation_estimated_value(option, f, x, h)
+        error = solver_differenciation_error(real_value, estimated_value)
 
-    print("\nValor real:", real_value)
-    print("Valor estimado:", estimated_value)
-    print("Error:", round(error, 2),"%")
+        print("\nValor real:", real_value)
+        print("Valor estimado:", estimated_value)
+        print("Error:", round(error, 2),"%")
+    except Exception as e:
+        print(f"\nError al procesar la función o los datos: {e}\n")
 
 
 def solver_differenciation_real_value(function: str, x: float):
@@ -185,7 +189,7 @@ def solver_differenciation_estimated_value(option: int, f: str, x: float, h: flo
         
         # Centered, Fourth Derivative, O(h⁴)
         
-        formula_result = (-f_xi_h(+3) + 12*f_xi_h(+2) - 39*f_xi_h(+1) + 56*f_xi - 39*f_xi_h(-1) + 12*f_xi_h(-2) - f_xi_h(-3))/(12*h**4)
+        formula_result = (-f_xi_h(+3) + 12*f_xi_h(+2) - 39*f_xi_h(+1) + 56*f_xi - 39*f_xi_h(-1) + 12*f_xi_h(-2) - f_xi_h(-3))/(6*h**4)
 
     else:
         print("\nError desconocido\n")
@@ -197,17 +201,20 @@ def solver_differenciation_estimated_value(option: int, f: str, x: float, h: flo
 
 def solver_integration(option: int):
 
-    f = input("\nFunción? ")
-    a = float(input("\na? "))
-    b = float(input("\nb? "))
+    try:
+        f = input("\nFunción? ")
+        a = get_float("\na? ")
+        b = get_float("\nb? ")
 
-    real_value = solver_integration_real_value(f, a, b)
-    estimated_value = solver_integration_estimated_value(option, f, a, b, real_value)
-    error = solver_integration_error(real_value, estimated_value)
+        real_value = solver_integration_real_value(f, a, b)
+        estimated_value = solver_integration_estimated_value(option, f, a, b, real_value)
+        error = solver_integration_error(real_value, estimated_value)
 
-    print("Valor real:", real_value)
-    print("Valor estimado:", estimated_value)
-    print("Error:", round(error, sig_fig),"%")
+        print("Valor real:", real_value)
+        print("Valor estimado:", estimated_value)
+        print("Error:", round(error, sig_fig),"%")
+    except Exception as e:
+        print(f"\nError al procesar la función o los datos: {e}\n")
 
 
 def solver_integration_real_value(function: str, a: float, b: float):
@@ -244,7 +251,7 @@ def solver_integration_estimated_value(option: int, f: str, a: float, b: float, 
 
         # Trapezoidal Rule (Multiple Application)
 
-        n = int(input("\nNúmero de intervalos inicial? "))
+        n = get_int("\nNúmero de intervalos inicial? ")
 
         h = (b - a)/n
 
@@ -262,9 +269,9 @@ def solver_integration_estimated_value(option: int, f: str, a: float, b: float, 
         
         # Trapezoidal Rule (Multiple Application AND Iterative)
 
-        error = float(input("\nError? (Formato: 0.01 = 0.01%) "))
+        error = get_float("\nError? (Formato: 0.01 = 0.01%) ")
 
-        n = int(input("\nNúmero de intervalos inicial? "))
+        n = get_int("\nNúmero de intervalos inicial? ")
 
         original_n = n
 

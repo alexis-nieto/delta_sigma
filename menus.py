@@ -2,6 +2,7 @@ import sys
 import os
 from time import sleep
 from solver import solver_differentiation, solver_integration
+from utils import get_int
 
 
 def indent(n_spaces: int) -> str:
@@ -23,7 +24,7 @@ def menu_main():
         print_menu_main()
         print("")
 
-        option = int(input("? "))
+        option = get_int("? ")
 
         if option == 0:
             print("\nAdiós...\n")
@@ -49,7 +50,7 @@ def menu_differenciation():
         clear_screen()
         print_menu_differenciation()
         print("")
-        option = int(input("? "))
+        option = get_int("? ")
         clear_screen()
 
         if option == 0:
