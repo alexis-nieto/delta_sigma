@@ -33,7 +33,7 @@ def menu_main():
 
         elif option == 1:
 
-            menu_differenciation()
+            menu_differentiation()
 
         elif option == 2:
 
@@ -44,11 +44,11 @@ def menu_main():
             sleep(1)
 
 
-def menu_differenciation():
+def menu_differentiation():
 
     while True:
         clear_screen()
-        print_menu_differenciation()
+        print_menu_differentiation()
         print("")
         option = get_int("? ")
         clear_screen()
@@ -98,7 +98,7 @@ def print_menu_main():
     print("• 0. Salir")
 
 
-def print_menu_differenciation():
+def print_menu_differentiation():
 
     print(f"{indent(2)}== Diferenciación Numérica ==")
     print("")

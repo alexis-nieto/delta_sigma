@@ -13,9 +13,9 @@ def solver_differentiation(option: int):
         x = get_float("\nx? ")
         h = get_float("\nh? ")
 
-        real_value = solver_differenciation_real_value(f, x)
-        estimated_value = solver_differenciation_estimated_value(option, f, x, h)
-        error = solver_differenciation_error(real_value, estimated_value)
+        real_value = solver_differentiation_real_value(f, x)
+        estimated_value = solver_differentiation_estimated_value(option, f, x, h)
+        error = solver_differentiation_error(real_value, estimated_value)
 
         print("\nValor real:", real_value)
         print("Valor estimado:", estimated_value)
@@ -24,31 +24,31 @@ def solver_differentiation(option: int):
         print(f"\nError al procesar la función o los datos: {e}\n")
 
 
-def solver_differenciation_real_value(function: str, x: float):
+def solver_differentiation_real_value(function: str, x: float):
 
     sy_x = sp.symbols('x')
-    f = sp.sympify(function)
+    f = sp.sympify(function, locals={'e': sp.E, 'pi': sp.pi})
 
     f_derivative = sp.diff(f, sy_x)
     evaluation = f_derivative.subs(sy_x, x)
 
-    return round(evaluation, sig_fig)
+    return round(evaluation.evalf(), sig_fig)
 
 
-def solver_differenciation_error(real_value: float, estimated_value: float):
+def solver_differentiation_error(real_value: float, estimated_value: float):
 
     error = abs((real_value - estimated_value)*(100)/real_value)
 
     return round(error, sig_fig)
 
 
-def solver_differenciation_estimated_value(option: int, f: str, x: float, h: float):
+def solver_differentiation_estimated_value(option: int, f: str, x: float, h: float):
 
     def f_xi_h(times: int):
-        return round(f.subs(sy_x, x+h*times), sig_fig)
+        return round(f.subs(sy_x, x+h*times).evalf(), sig_fig)
 
     sy_x = sp.symbols('x')
-    f = sp.sympify(f)
+    f = sp.sympify(f, locals={'e': sp.E, 'pi': sp.pi})
 
     f_xi = f.subs(sy_x, x)
 
@@ -195,7 +195,7 @@ def solver_differenciation_estimated_value(option: int, f: str, x: float, h: flo
         print("\nError desconocido\n")
         sys.exit(2)
 
-    return round(formula_result, sig_fig)
+    return round(formula_result.evalf(), sig_fig)
 
 ############################################
 
@@ -220,11 +220,11 @@ def solver_integration(option: int):
 def solver_integration_real_value(function: str, a: float, b: float):
 
     sy_x = sp.symbols('x')
-    f = sp.sympify(function)
+    f = sp.sympify(function, locals={'e': sp.E, 'pi': sp.pi})
 
     definite_integral = sp.integrate(f, (sy_x, a, b))
 
-    return round(definite_integral, sig_fig)
+    return round(definite_integral.evalf(), sig_fig)
 
 
 def solver_integration_error(real_value: float, estimated_value: float):
@@ -237,10 +237,10 @@ def solver_integration_error(real_value: float, estimated_value: float):
 def solver_integration_estimated_value(option: int, f: str, a: float, b: float, real_value: float):
 
     def f_(limit: int):
-        return round(f.subs(sy_x, limit), sig_fig)
+        return round(f.subs(sy_x, limit).evalf(), sig_fig)
 
     sy_x = sp.symbols('x')
-    f = sp.sympify(f)
+    f = sp.sympify(f, locals={'e': sp.E, 'pi': sp.pi})
 
     if option == 1:
 
@@ -397,7 +397,7 @@ def solver_integration_estimated_value(option: int, f: str, a: float, b: float, 
 
         formula_result = round((b - a)*(f_(a) + 3*(f_(a+h)) + 3*(f_(a+h*2)) + f_(b))/(8), sig_fig)
 
-    return round(formula_result, sig_fig)
+    return round(formula_result.evalf(), sig_fig)
 
 def print_table(n: int, h_list: list, formula_result_list: list, error_list: list, sig_fig: int):
 
