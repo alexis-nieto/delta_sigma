@@ -13,7 +13,15 @@ def solver_differentiation(option: int):
         x = get_float("\nx? ")
         h = get_float("\nh? ")
 
-        real_value = solver_differentiation_real_value(f, x)
+        order = 1
+        if option in [3, 4, 11, 12, 19, 20]:
+            order = 2
+        elif option in [5, 6, 13, 14, 21, 22]:
+            order = 3
+        elif option in [7, 8, 15, 16, 23, 24]:
+            order = 4
+
+        real_value = solver_differentiation_real_value(f, x, order)
         estimated_value = solver_differentiation_estimated_value(option, f, x, h)
         error = solver_differentiation_error(real_value, estimated_value)
 
@@ -24,12 +32,12 @@ def solver_differentiation(option: int):
         print(f"\nError al procesar la función o los datos: {e}\n")
 
 
-def solver_differentiation_real_value(function: str, x: float):
+def solver_differentiation_real_value(function: str, x: float, order: int = 1):
 
     sy_x = sp.symbols('x')
     f = sp.sympify(function, locals={'e': sp.E, 'pi': sp.pi})
 
-    f_derivative = sp.diff(f, sy_x)
+    f_derivative = sp.diff(f, sy_x, order)
     evaluation = f_derivative.subs(sy_x, x)
 
     return round(evaluation.evalf(), sig_fig)
